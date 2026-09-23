@@ -41,6 +41,20 @@ Prepara fontes brutas — Excel, CSV, PDF, Word, imagens, e-mails, transcriçõe
 - Skills.sh: não localizado no catálogo no momento da publicação
 - [Repositório no GitHub](https://github.com/armel-felipe/prepare-analysis-input)
 
+### 6. `frontend-slides`
+
+Cria apresentações HTML ricas em animação, sem dependências, com stage fixo 16:9 e estética anti-"AI slop". Converte PowerPoint para web (preservando imagens e conteúdo) e exporta HTML para PDF. Não gera `.pptx` diretamente — para isso, combine com a skill `pptx`.
+
+- [Página no skills.sh](https://skills.sh/zarazhangrui/frontend-slides)
+- [Repositório no GitHub](https://github.com/zarazhangrui/frontend-slides)
+
+### 7. `powerpoint`
+
+Cria, lê, edita, renderiza e valida arquivos `.pptx` e `.potx` via `pptxgenjs` e edição OOXML. Inclui gráficos nativos, notas, validação estrutural e QA visual. Complementar à skill `pptx` (mesma família, com ênfase em `pptxgenjs`).
+
+- [Página no skills.sh](https://skills.sh/anthropics/skills/powerpoint)
+- [Repositório no GitHub](https://github.com/anthropics/skills)
+
 ## Fluxo recomendado
 
 ```text
@@ -52,7 +66,19 @@ pptx-deck-context
         ↓
 pptx-reference-deck-analysis (se houver deck de referência)
         ↓
-pptx
+pptx  (ou powerpoint, para geração via pptxgenjs)
+        ↓
+QA de conteúdo, estrutura e renderização
+```
+
+### Caminho alternativo: HTML → PPTX
+
+Para converter uma apresentação HTML existente em `.pptx`, o fluxo é de reconstrução (não conversão automática):
+
+```text
+frontend-slides (cria/edita a apresentação HTML; exporta para PDF)
+        ↓
+pptx (reconstrói cada slide como .pptx a partir do conteúdo e do design do HTML)
         ↓
 QA de conteúdo, estrutura e renderização
 ```
@@ -73,6 +99,8 @@ npx skills add wshobson/agents@pptx-deck-context -a claude-code
 npx skills add wshobson/agents@pptx-reference-deck-analysis -a claude-code
 npx skills add anthropics/skills@pptx -a claude-code
 npx skills add github.com/armel-felipe/prepare-analysis-input -a claude-code
+npx skills add zarazhangrui/frontend-slides -a claude-code
+npx skills add anthropics/skills@powerpoint -a claude-code
 ```
 
 Ou instale o repositório completo e selecione as skills desejadas quando o CLI solicitar:
@@ -81,6 +109,7 @@ Ou instale o repositório completo e selecione as skills desejadas quando o CLI 
 npx skills add wshobson/agents -a claude-code
 npx skills add anthropics/skills -a claude-code
 npx skills add https://github.com/armel-felipe/prepare-analysis-input.git -a claude-code
+npx skills add zarazhangrui/frontend-slides -a claude-code
 ```
 
 ### ChatGPT / Codex
@@ -93,6 +122,8 @@ npx skills add wshobson/agents@pptx-deck-context -a codex
 npx skills add wshobson/agents@pptx-reference-deck-analysis -a codex
 npx skills add anthropics/skills@pptx -a codex
 npx skills add https://github.com/armel-felipe/prepare-analysis-input.git -a codex
+npx skills add zarazhangrui/frontend-slides -a codex
+npx skills add anthropics/skills@powerpoint -a codex
 ```
 
 No ChatGPT web, a alternativa manual é abrir o link do GitHub, copiar o `SKILL.md` da skill desejada e adicioná-lo às instruções/arquivos de um GPT personalizado ou de um projeto, respeitando a licença do repositório original.
@@ -110,4 +141,4 @@ Projeto:     .opencode/skills/<nome-da-skill>/SKILL.md
 
 ## Licenças e atribuição
 
-Consulte a licença de cada repositório antes de redistribuir ou modificar uma skill. A skill `pptx` do repositório `anthropics/skills` contém termos próprios; este catálogo não altera esses termos.
+Consulte a licença de cada repositório antes de redistribuir ou modificar uma skill. As skills `pptx` e `powerpoint` do repositório `anthropics/skills` contêm termos próprios; a skill `frontend-slides` do repositório `zarazhangrui/frontend-slides` é distribuída sob licença MIT. Este catálogo não altera esses termos.
